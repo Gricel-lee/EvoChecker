@@ -150,6 +150,7 @@ public class EvoChecker {
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
+			System.exit(0);
 		}
 	}
 	
