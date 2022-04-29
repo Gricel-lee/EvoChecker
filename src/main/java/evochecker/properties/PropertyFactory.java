@@ -40,8 +40,20 @@ public class PropertyFactory {
 		
 		try {
 			PrismAPI api = new PrismAPI(null);
-			api.parseModelAndProperties(internalModel, propertiesFilename);
-	
+			propertiesFilename	= Utility.getProperty(Constants.PROPERTIES_FILE_KEYWORD); // update propertiesFile on each Evochecker instance, e.g., needed when Evochecker is instanciated in a for loop
+			
+			api.parseModelAndProperties(internalModel, propertiesFilename); //Note. an error may appear if Evochecker is instantiated in a (for) loop,
+			//each time with a different pair of (model,properties)
+			//For a reason related to PrismAPI, the .parseModelAndProperties method do not update the properties file even when propertiesFilename
+			//contains the current file to properties.
+			
+			// A possible solution is to discart the use of
+			// - PrismAPI api = new PrismAPI(null);
+			//and create the following lists from the file "propertiesFilename":
+			// - list.add(objectivesList);
+			// - list.add(constaintsList);
+			
+			
 			PropertiesFile  propsFile = api.getPrismPropertiesFile();
 			
 			
